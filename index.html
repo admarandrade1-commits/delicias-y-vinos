@@ -151,38 +151,9 @@
 
   <main>
     <!-- HERO -->
-    <section class="hero">
-      <div class="hero__slides">
-        <div class="hero__slide active" style="--bg: url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1600&q=80')">
-          <div class="hero__content">
-            <p class="hero__eyebrow">Selección Especial 2025</p>
-            <h1 class="hero__title">El Arte del<br/><em>Vino Perfecto</em></h1>
-            <p class="hero__sub">Más de 500 referencias de vinos, licores y productos gourmet seleccionados desde Lugo, Galicia.</p>
-            <a href="categoria.html?cat=vinos" class="btn btn--gold">Explorar Vinos</a>
-          </div>
-        </div>
-        <div class="hero__slide" style="--bg: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80')">
-          <div class="hero__content">
-            <p class="hero__eyebrow">Nuevas Llegadas</p>
-            <h1 class="hero__title">Ibéricos de<br/><em>Denominación</em></h1>
-            <p class="hero__sub">Los mejores jamones y embutidos ibéricos para acompañar cada copa.</p>
-            <a href="categoria.html?cat=gourmet" class="btn btn--gold">Ver Gourmet</a>
-          </div>
-        </div>
-        <div class="hero__slide" style="--bg: url('https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=1600&q=80')">
-          <div class="hero__content">
-            <p class="hero__eyebrow">Destilados Premium</p>
-            <h1 class="hero__title">Licores para<br/><em>Todo Paladar</em></h1>
-            <p class="hero__sub">Ginebras, whiskies, rones y brandys de las mejores bodegas del mundo.</p>
-            <a href="categoria.html?cat=destilados" class="btn btn--gold">Ver Destilados</a>
-          </div>
-        </div>
-      </div>
-      <div class="hero__controls">
-        <button class="hero__prev" onclick="changeSlide(-1)">&#8592;</button>
-        <div class="hero__dots" id="hero-dots"></div>
-        <button class="hero__next" onclick="changeSlide(1)">&#8594;</button>
-      </div>
+    <section class="hero" style="height:100vh;min-height:600px;margin-top:var(--header-h);position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:url('https://www.deliciasyvinos.com/uploads/media/images/HOME2.jpg') center/cover no-repeat;"></div>
+      <div style="position:absolute;inset:0;background:rgba(0,0,0,0.35);"></div>
     </section>
 
     <!-- CATEGORIAS -->
