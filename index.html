@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delicias y Vinos</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <h1>A carregar...</h1>
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delicias y Vinos — Vinos, Licores y Gourmet desde 1952</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- AGE MODAL -->
+  <div id="age-modal" class="age-modal">
+    <div class="age-modal__backdrop"></div>
+    <div class="age-modal__box">
+      <div class="age-modal__logo">
+        <span class="logo-text">Delicias<em>y</em>Vinos</span>
+      </div>
+      <p class="age-modal__tagline">Esta tienda vende bebidas alcohólicas.</p>
+      <h2 class="age-modal__title">¿Tienes 18 años<br/>o más?</h2>
+      <div class="age-modal__actions">
+        <button onclick="closeAgeModal()" class="btn btn--gold">Sí, tengo 18+</button>
+        <button onclick="denyAge()" class="btn btn--outline">No</button>
+      </div>
+      <p class="age-modal__legal">Al entrar confirmas que conoces nuestra <a href="#">política de privacidad</a>.</p>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header__top">
+      <span>+34 982 550 543</span>
+      <span>Envío gratuito desde 60€ · Entrega en 24/48h</span>
+      <span><a href="mailto:pedidos@deliciasyvinos.com">pedidos@deliciasyvinos.com</a></span>
+    </div>
+    <div class="header__main">
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      <a href="index.html" class="header__logo">Delicias<em>y</em>Vinos</a>
+      <nav class="header__nav" id="main-nav">
+        <ul class="nav__list">
+          <li class="nav__item has-dropdown">
+            <a href="categoria.html?cat=vinos" class="nav__link">Vinos <span class="arrow">▾</span></a>
+            <div class="dropdown">
+              <div class="dropdown__col">
+                <h4>Blancos</h4>
+                <a href="categoria.html?cat=albarino">Albariño</a>
+                <a href="categoria.html?cat=godello">Godello</a>
+                <a href="categoria.html?cat=ribeiro">Ribeiro</a>
+                <a href="categoria.html?cat=verdejo">Verdejo</a>
+              </div>
+              <div class="dropdown__col">
+                <h4>Tintos</h4>
+                <a href="categoria.html?cat=rioja">Rioja</a>
+                <a href="categoria.html?cat=ribera">Ribera del Duero</a>
+                <a href="categoria.html?cat=mencia">Mencía</a>
+              </div>
+              <div class="dropdown__col">
+                <h4>Otros</h4>
+                <a href="categoria.html?cat=rosado">Rosado</a>
+                <a href="categoria.html?cat=espumoso">Espumoso / Cava</a>
+              </div>
+            </div>
+          </li>
+          <li class="nav__item has-dropdown">
+            <a href="categoria.html?cat=destilados" class="nav__link">Destilados <span class="arrow">▾</span></a>
+            <div class="dropdown">
+              <div class="dropdown__col">
+                <h4>Categorías</h4>
+                <a href="categoria.html?cat=ginebra">Ginebra</a>
+                <a href="categoria.html?cat=whisky">Whisky</a>
+                <a href="categoria.html?cat=ron">Ron</a>
+                <a href="categoria.html?cat=brandy">Brandy</a>
+                <a href="categoria.html?cat=orujo">Orujo</a>
+              </div>
+            </div>
+          </li>
+          <li class="nav__item has-dropdown">
+            <a href="categoria.html?cat=gourmet" class="nav__link">Gourmet <span class="arrow">▾</span></a>
+            <div class="dropdown">
+              <div class="dropdown__col">
+                <h4>Ibéricos</h4>
+                <a href="categoria.html?cat=jamon">Jamones</a>
+                <a href="categoria.html?cat=embutidos">Embutidos</a>
+              </div>
+              <div class="dropdown__col">
+                <h4>Otros</h4>
+                <a href="categoria.html?cat=conservas">Conservas</a>
+                <a href="categoria.html?cat=quesos">Quesos</a>
+                <a href="categoria.html?cat=chocolates">Chocolates</a>
+              </div>
+            </div>
+          </li>
+          <li class="nav__item"><a href="categoria.html?cat=cerveza" class="nav__link">Cerveza</a></li>
+          <li class="nav__item"><a href="categoria.html?cat=cafe" class="nav__link">Café</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <button class="icon-btn" id="search-toggle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <a href="#" class="icon-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+        <button class="icon-btn" id="cart-toggle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="cart-count" id="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+    <div class="search-bar" id="search-bar">
+      <input type="text" placeholder="Buscar vinos, licores, gourmet..."/>
+      <button>Buscar</button>
+    </div>
+  </header>
+
+  <!-- CART DRAWER -->
+  <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer__header">
+      <h3>Tu Cesta</h3>
+      <button onclick="toggleCart()" class="cart-drawer__close">✕</button>
+    </div>
+    <div class="cart-drawer__items" id="cart-items">
+      <p class="cart-empty">Tu cesta está vacía.</p>
+    </div>
+    <div class="cart-drawer__footer" id="cart-footer" style="display:none">
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cart-total-price">0,00€</span>
+      </div>
+      <a href="#" class="btn btn--gold btn--full">Finalizar Compra</a>
+    </div>
+  </aside>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero__slides">
+        <div class="hero__slide active" style="--bg: url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1600&q=80')">
+          <div class="hero__content">
+            <p class="hero__eyebrow">Selección Especial 2025</p>
+            <h1 class="hero__title">El Arte del<br/><em>Vino Perfecto</em></h1>
+            <p class="hero__sub">Más de 500 referencias de vinos, licores y productos gourmet seleccionados desde Lugo, Galicia.</p>
+            <a href="categoria.html?cat=vinos" class="btn btn--gold">Explorar Vinos</a>
+          </div>
+        </div>
+        <div class="hero__slide" style="--bg: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80')">
+          <div class="hero__content">
+            <p class="hero__eyebrow">Nuevas Llegadas</p>
+            <h1 class="hero__title">Ibéricos de<br/><em>Denominación</em></h1>
+            <p class="hero__sub">Los mejores jamones y embutidos ibéricos para acompañar cada copa.</p>
+            <a href="categoria.html?cat=gourmet" class="btn btn--gold">Ver Gourmet</a>
+          </div>
+        </div>
+        <div class="hero__slide" style="--bg: url('https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=1600&q=80')">
+          <div class="hero__content">
+            <p class="hero__eyebrow">Destilados Premium</p>
+            <h1 class="hero__title">Licores para<br/><em>Todo Paladar</em></h1>
+            <p class="hero__sub">Ginebras, whiskies, rones y brandys de las mejores bodegas del mundo.</p>
+            <a href="categoria.html?cat=destilados" class="btn btn--gold">Ver Destilados</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero__controls">
+        <button class="hero__prev" onclick="changeSlide(-1)">&#8592;</button>
+        <div class="hero__dots" id="hero-dots"></div>
+        <button class="hero__next" onclick="changeSlide(1)">&#8594;</button>
+      </div>
+    </section>
+
+    <!-- CATEGORIAS -->
+    <section class="categories section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Nuestra Selección</h2>
+          <p class="section-sub">Desde Galicia al mundo, con más de 70 años de experiencia</p>
+        </div>
+        <div class="categories__grid">
+          <a href="categoria.html?cat=vinos" class="cat-card">
+            <div class="cat-card__img" style="background-image:url('https://images.unsplash.com/photo-1474722883778-792e7990302f?w=600&q=80')"></div>
+            <div class="cat-card__body"><h3>Vinos</h3><p>Blancos, tintos, rosados, espumosos e internacionales</p><span class="cat-card__link">Descubrir →</span></div>
+          </a>
+          <a href="categoria.html?cat=gourmet" class="cat-card">
+            <div class="cat-card__img" style="background-image:url('https://images.unsplash.com/photo-1626806819282-2c1dc01a5e0c?w=600&q=80')"></div>
+            <div class="cat-card__body"><h3>Ibéricos</h3><p>Jamones y paletas con Denominación de Origen</p><span class="cat-card__link">Descubrir →</span></div>
+          </a>
+          <a href="categoria.html?cat=destilados" class="cat-card">
+            <div class="cat-card__img" style="background-image:url('https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=600&q=80')"></div>
+            <div class="cat-card__body"><h3>Destilados</h3><p>Ginebra, whisky, ron, brandy y más licores premium</p><span class="cat-card__link">Descubrir →</span></div>
+          </a>
+          <a href="categoria.html?cat=gourmet" class="cat-card">
+            <div class="cat-card__img" style="background-image:url('https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=600&q=80')"></div>
+            <div class="cat-card__body"><h3>Gourmet</h3><p>Quesos curados, conservas, chocolates y aceites</p><span class="cat-card__link">Descubrir →</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECOMENDACIONES -->
+    <section class="products-section section section--dark">
+      <div class="container">
+        <div class="section-header section-header--light">
+          <div class="section-header__left">
+            <span class="section-eyebrow">Curada por nuestros expertos</span>
+            <h2 class="section-title">Nuestra Recomendación</h2>
+          </div>
+          <a href="categoria.html?cat=vinos" class="btn btn--outline-light">Ver todos</a>
+        </div>
+        <div class="products__carousel" id="featured-carousel"></div>
+      </div>
+    </section>
+
+    <!-- BANNER -->
+    <section class="banner-strip">
+      <div class="banner-strip__item">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        <span>Envío gratuito desde 60€</span>
+      </div>
+      <div class="banner-strip__item">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        <span>Entrega en 24/48 horas</span>
+      </div>
+      <div class="banner-strip__item">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>Pago seguro garantizado</span>
+      </div>
+      <div class="banner-strip__item">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>Tienda en Lugo desde 1952</span>
+      </div>
+    </section>
+
+    <!-- DESTACADOS -->
+    <section class="products-section section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-header__left">
+            <span class="section-eyebrow">Más vendidos este mes</span>
+            <h2 class="section-title">Productos Destacados</h2>
+          </div>
+          <a href="categoria.html?cat=vinos" class="btn btn--outline">Ver todos</a>
+        </div>
+        <div class="products__grid" id="highlighted-grid"></div>
+      </div>
+    </section>
+
+    <!-- SOBRE NOS -->
+    <section class="about-strip section">
+      <div class="container about-strip__inner">
+        <div class="about-strip__text">
+          <span class="section-eyebrow">Quiénes somos</span>
+          <h2>Desde 1952,<br/><em>pasión por lo auténtico</em></h2>
+          <p>Somos una empresa familiar ubicada en Lugo, Galicia, especializada en la venta y distribución de vinos, licores y productos gourmet. Más de 70 años seleccionando lo mejor para los mejores paladares.</p>
+          <a href="#" class="btn btn--gold">Conoce nuestra calidad</a>
+        </div>
+        <div class="about-strip__image">
+          <img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?w=700&q=80" alt="Bodega Delicias y Vinos" loading="lazy"/>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <span class="logo-text logo-text--footer">Delicias<em>y</em>Vinos</span>
+        <p>Empresa especializada en la venta y distribución de alimentos y bebidas desde 1952.</p>
+        <div class="footer__langs">
+          <a href="#" class="lang-btn active">ES</a>
+          <a href="#" class="lang-btn">PT</a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Legalidad</h4>
+        <ul>
+          <li><a href="#">Aviso Legal</a></li>
+          <li><a href="#">Política de Privacidad</a></li>
+          <li><a href="#">Política de Cookies</a></li>
+          <li><a href="#">Envíos y Pagos</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="#">Conócenos</a></li>
+          <li><a href="#">Contacto</a></li>
+          <li><a href="#">Devoluciones</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Contacto</h4>
+        <ul class="footer__contact">
+          <li>📞 <a href="tel:+34604066581">(+34) 604 066 581</a></li>
+          <li>✉️ <a href="mailto:pedidos@deliciasyvinos.com">pedidos@deliciasyvinos.com</a></li>
+          <li>📍 Rúa da Industria, 93 · 27003 Lugo</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2026 Delicias y Vinos · Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

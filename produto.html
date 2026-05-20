@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Produto — Delicias y Vinos</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <header class="header" id="header">
+    <div class="header__top">
+      <span>+34 982 550 543</span>
+      <span>Envío gratuito desde 60€ · Entrega en 24/48h</span>
+      <span><a href="mailto:pedidos@deliciasyvinos.com">pedidos@deliciasyvinos.com</a></span>
+    </div>
+    <div class="header__main">
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+      <a href="index.html" class="header__logo">Delicias<em>y</em>Vinos</a>
+      <nav class="header__nav" id="main-nav">
+        <ul class="nav__list">
+          <li class="nav__item has-dropdown">
+            <a href="categoria.html?cat=vinos" class="nav__link">Vinos <span class="arrow">▾</span></a>
+            <div class="dropdown">
+              <div class="dropdown__col">
+                <h4>Blancos</h4>
+                <a href="categoria.html?cat=albarino">Albariño</a>
+                <a href="categoria.html?cat=godello">Godello</a>
+              </div>
+              <div class="dropdown__col">
+                <h4>Tintos</h4>
+                <a href="categoria.html?cat=rioja">Rioja</a>
+                <a href="categoria.html?cat=ribera">Ribera del Duero</a>
+              </div>
+            </div>
+          </li>
+          <li class="nav__item"><a href="categoria.html?cat=destilados" class="nav__link">Destilados</a></li>
+          <li class="nav__item"><a href="categoria.html?cat=gourmet" class="nav__link">Gourmet</a></li>
+          <li class="nav__item"><a href="categoria.html?cat=cerveza" class="nav__link">Cerveza</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <button class="icon-btn" id="search-toggle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <a href="#" class="icon-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+        <button class="icon-btn" id="cart-toggle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="cart-count" id="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+    <div class="search-bar" id="search-bar">
+      <input type="text" placeholder="Buscar productos..."/>
+      <button>Buscar</button>
+    </div>
+  </header>
+
+  <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer__header">
+      <h3>Tu Cesta</h3>
+      <button onclick="toggleCart()" class="cart-drawer__close">✕</button>
+    </div>
+    <div class="cart-drawer__items" id="cart-items">
+      <p class="cart-empty">Tu cesta está vacía.</p>
+    </div>
+    <div class="cart-drawer__footer" id="cart-footer" style="display:none">
+      <div class="cart-total"><span>Total</span><span id="cart-total-price">0,00€</span></div>
+      <a href="#" class="btn btn--gold btn--full">Finalizar Compra</a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="breadcrumb">
+      <div class="container">
+        <a href="index.html">Inicio</a>
+        <span>›</span>
+        <a href="categoria.html?cat=vinos" id="bc-cat">Categoría</a>
+        <span>›</span>
+        <span id="bc-product">Produto</span>
+      </div>
+    </div>
+
+    <div class="container product-detail" id="product-detail">
+      <div class="product-detail__gallery">
+        <img id="product-img" src="" alt="" class="product-detail__main-img"/>
+      </div>
+      <div class="product-detail__info">
+        <p class="product-detail__bodega" id="product-bodega"></p>
+        <h1 class="product-detail__title" id="product-name"></h1>
+        <p class="product-detail__price" id="product-price"></p>
+        <p class="product-detail__desc" id="product-desc"></p>
+        <div class="product-detail__meta" id="product-meta"></div>
+        <div class="product-detail__qty">
+          <button onclick="changeDetailQty(-1)">−</button>
+          <span id="detail-qty">1</span>
+          <button onclick="changeDetailQty(1)">+</button>
+        </div>
+        <div class="product-detail__actions">
+          <button class="btn btn--gold btn--full" id="add-to-cart-btn">Añadir a la cesta</button>
+        </div>
+        <div class="product-detail__trust">
+          <span>🚚 Envío gratuito desde 60€</span>
+          <span>🔒 Pago seguro</span>
+          <span>↩️ Devolución fácil</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="products-section section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">También te puede gustar</h2>
+        </div>
+        <div class="products__grid" id="related-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <span class="logo-text logo-text--footer">Delicias<em>y</em>Vinos</span>
+        <p>Empresa especializada en la venta y distribución de alimentos y bebidas desde 1952.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Legalidad</h4>
+        <ul>
+          <li><a href="#">Aviso Legal</a></li>
+          <li><a href="#">Política de Privacidad</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="#">Conócenos</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Contacto</h4>
+        <ul class="footer__contact">
+          <li>📞 <a href="tel:+34604066581">(+34) 604 066 581</a></li>
+          <li>✉️ <a href="mailto:pedidos@deliciasyvinos.com">pedidos@deliciasyvinos.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© 2026 Delicias y Vinos · Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/produto.js"></script>
+</body>
+</html>
