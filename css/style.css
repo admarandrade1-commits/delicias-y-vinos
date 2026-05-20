@@ -235,3 +235,10 @@ input, select { font-family: inherit; }
 .header { background: #1A1612 !important; } .header__main { background: #1A1612 !important; } .search-bar { background: #2E2925 !important; }
 .header__logo img { filter: brightness(10); } .nav__link { color: rgba(255,255,255,0.85) !important; } .hamburger span { background: var(--white) !important; }
 .header__logo img { filter: none !important; }
+
+/* FORCE HEADER VISIBLE */
+.header__main { display: flex !important; align-items: center !important; }
+.header__logo { display: flex !important; opacity: 1 !important; visibility: visible !important; }
+.header__nav { display: flex !important; position: static !important; height: auto !important; width: auto !important; background: transparent !important; padding: 0 !important; transform: none !important; overflow: visible !important; z-index: auto !important; flex: 1 !important; }
+.nav__list { display: flex !important; flex-direction: row !important; gap: 4px !important; }
+.hamburger { display: none !important; }
