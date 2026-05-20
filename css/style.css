@@ -234,3 +234,4 @@ input, select { font-family: inherit; }
 .nav__link { color: var(--white) !important; } .nav__link:hover { color: var(--gold) !important; } .header__main { background: var(--dark); }
 .header { background: #1A1612 !important; } .header__main { background: #1A1612 !important; } .search-bar { background: #2E2925 !important; }
 .header__logo img { filter: brightness(10); } .nav__link { color: rgba(255,255,255,0.85) !important; } .hamburger span { background: var(--white) !important; }
+.header__logo img { filter: none !important; }
