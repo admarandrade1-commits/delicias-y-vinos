@@ -121,33 +121,20 @@
     </div>
 
     <div class="container cat-page">
-      <aside class="sidebar" id="sidebar">
-        <div class="sidebar__header">
-          <h3>Filtros</h3>
-          <button class="sidebar__clear" onclick="clearFilters()">Limpiar</button>
+      <aside class="sidebar" id="sidebar" style="min-width:200px;max-width:220px;">
+        <div style="background:#1a1a1a;color:#fff;padding:14px 20px;font-size:14px;font-weight:700;letter-spacing:0.12em;" id="sidebar-cat-title">VINOS</div>
+        <div id="sidebar-subcats" style="background:#f5f5f5;border:1px solid #e0e0e0;"></div>
+        <div style="background:#1a1a1a;color:#fff;padding:12px 20px;font-size:13px;font-weight:600;margin-top:16px;display:flex;justify-content:space-between;align-items:center;">
+          <span>Precio</span>
+          <button onclick="clearFilters()" style="background:none;border:none;color:#aaa;font-size:11px;cursor:pointer;">-</button>
         </div>
-        <div class="sidebar__group">
-          <h4>Subcategoría</h4>
-          <div id="sidebar-cats" class="sidebar__options"></div>
-        </div>
-        <div class="sidebar__group">
-          <h4>Precio</h4>
-          <div class="price-range">
-            <input type="range" id="price-range" min="0" max="150" value="150" step="1" oninput="updatePriceFilter(this.value)"/>
-            <div class="price-range__labels">
-              <span>0€</span>
-              <span id="price-max-label">150€+</span>
-            </div>
+        <div style="padding:16px 20px;border:1px solid #e0e0e0;border-top:none;">
+          <input type="range" id="price-range" min="0" max="600" value="600" step="1" oninput="updatePriceFilter(this.value)" style="width:100%;"/>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;margin-top:4px;">
+            <span>0€</span>
+            <span id="price-max-label">600€+</span>
           </div>
-        </div>
-        <div class="sidebar__group">
-          <h4>Ordenar por</h4>
-          <select id="sort-select" onchange="renderCategoryProducts()" class="sidebar__select">
-            <option value="default">Relevancia</option>
-            <option value="price-asc">Precio: menor a mayor</option>
-            <option value="price-desc">Precio: mayor a menor</option>
-            <option value="name">Nombre A–Z</option>
-          </select>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;" id="price-checkboxes"></div>
         </div>
       </aside>
 
@@ -199,7 +186,27 @@
     </div>
   </footer>
 
-  <script src="js/data.js"></script>
+  <script src="js/data.js">function renderSidebar(cat) {
+    const SUBCAT_LABELS = {
+      vinos:      ['BLANCOS','TINTO','ROSADO','ESPUMOSO','DULCES','INTERNACIONALES','MAGNUM','OLOROSOS'],
+      destilados: ['GINEBRA','WHISKY','RON','BRANDY','VERMOUTH','ORUJO','CREMAS Y LICORES','SIDRA'],
+      gourmet:    ['IBÉRICOS','CONSERVAS','QUESOS','ACEITE','PATÉ','PIMENTÓN','CRACKERS','FRUTA'],
+      dulce:      ['CHOCOLATES','BOMBONES'],
+      cerveza:    ['RUBIA','ESPECIAL','ARTESANA','SIN ALCOHOL'],
+      infusiones: ['TÉ VERDE','TÉ NEGRO','ROOIBOS','OTROS'],
+    };
+    const labels = SUBCAT_LABELS[cat] || [];
+    const container = document.getElementById('sidebar-subcats');
+    const titleEl = document.getElementById('sidebar-cat-title');
+    if (titleEl) titleEl.textContent = cat.toUpperCase();
+    if (container) {
+      container.innerHTML = labels.map(l =>
+        `<div onclick="filterBySub('${l.toLowerCase()}')" style="padding:10px 20px;font-size:13px;letter-spacing:0.08em;border-bottom:1px solid #e0e0e0;cursor:pointer;background:#fff;transition:background 0.2s;"
+          onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background='#fff'">${l}</div>`
+      ).join('');
+    }
+  }
+</script>
   <script src="js/cart.js"></script>
   <script src="js/main.js"></script>
   <script src="js/categoria.js"></script>
