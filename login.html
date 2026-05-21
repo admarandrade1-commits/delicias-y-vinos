@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login — Delicias y Vinos</title>
+  <link rel="stylesheet" href="css/style.css?v=6"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    .login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--cream); padding-top: var(--header-h); }
+    .login-box { background: var(--white); padding: 48px 40px; max-width: 420px; width: 100%; border: 1px solid var(--border); }
+    .login-box h2 { font-family: var(--font-display); font-size: 32px; font-weight: 400; margin-bottom: 8px; text-align: center; }
+    .login-box p { font-size: 13px; color: var(--gray); text-align: center; margin-bottom: 32px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; color: var(--gray); }
+    .form-group input { width: 100%; padding: 12px 16px; border: 1px solid var(--border); font-family: var(--font-body); font-size: 14px; outline: none; transition: border-color 0.3s; }
+    .form-group input:focus { border-color: var(--gold); }
+    .login-error { background: #fee; border: 1px solid #fcc; color: #c33; font-size: 13px; padding: 10px 16px; margin-bottom: 16px; display: none; }
+    .login-success { background: #efe; border: 1px solid #cfc; color: #363; font-size: 13px; padding: 10px 16px; margin-bottom: 16px; display: none; }
+    .login-box a { color: var(--gold); font-size: 13px; }
+    .login-hint { font-size: 12px; color: var(--gray); text-align: center; margin-top: 20px; padding: 12px; background: var(--cream); }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="header__top">
+      <span>+34 982 550 543</span>
+      <span>Envío gratuito desde 60€ · Entrega en 24/48h</span>
+      <span><a href="mailto:pedidos@deliciasyvinos.com">pedidos@deliciasyvinos.com</a></span>
+    </div>
+    <div class="header__main">
+      <a href="index.html" class="header__logo"><img src="https://www.deliciasyvinos.com/themes/deliciasyvinos/_img/logo.png" alt="Delicias y Vinos" style="height:60px;width:auto;"/></a>
+      <div style="flex:1;"></div>
+      <a href="https://www.deliciasyvinos.com/calidad.htm" class="btn btn--outline-light" style="font-size:11px;letter-spacing:0.15em;padding:8px 20px;margin-right:8px;">CALIDAD</a>
+      <div class="header__actions">
+        <button class="icon-btn" id="search-toggle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <a href="login.html" class="icon-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+        <button class="icon-btn" id="cart-toggle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="cart-count" id="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="login-page">
+    <div class="login-box">
+      <h2>Iniciar Sesión</h2>
+      <p>Accede a tu cuenta de Delicias y Vinos</p>
+      <div class="login-error" id="login-error">Usuario o contraseña incorrectos.</div>
+      <div class="login-success" id="login-success">¡Bienvenido! Redirigiendo...</div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="tu@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" id="password" placeholder="••••••••"/>
+      </div>
+      <button onclick="doLogin()" class="btn btn--gold btn--full" style="margin-bottom:16px;">Entrar</button>
+      <div style="text-align:center;">
+        <a href="#">¿Olvidaste tu contraseña?</a>
+      </div>
+      <div class="login-hint">
+        <strong>Dados de teste:</strong><br/>
+        Email: cliente@deliciasyvinos.com<br/>
+        Senha: 1234
+      </div>
+    </div>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    const USERS = [
+      { email: "cliente@deliciasyvinos.com", password: "1234", nome: "Cliente" },
+      { email: "admin@deliciasyvinos.com", password: "admin123", nome: "Admin" }
+    ];
+
+    function doLogin() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const user = USERS.find(u => u.email === email && u.password === password);
+      const errorEl = document.getElementById('login-error');
+      const successEl = document.getElementById('login-success');
+
+      if (!email || !password) {
+        errorEl.style.display = 'block';
+        errorEl.textContent = 'Por favor rellena todos los campos.';
+        successEl.style.display = 'none';
+        return;
+      }
+
+      if (user) {
+        errorEl.style.display = 'none';
+        successEl.style.display = 'block';
+        sessionStorage.setItem('user', JSON.stringify(user));
+        setTimeout(() => window.location.href = 'index.html', 1500);
+      } else {
+        errorEl.style.display = 'block';
+        errorEl.textContent = 'Usuario o contraseña incorrectos.';
+        successEl.style.display = 'none';
+      }
+    }
+
+    document.addEventListener('keypress', e => {
+      if (e.key === 'Enter') doLogin();
+    });
+  </script>
+</body>
+</html>
