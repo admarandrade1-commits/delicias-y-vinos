@@ -121,20 +121,14 @@
     </div>
 
     <div class="container cat-page">
-      <aside class="sidebar" id="sidebar" style="min-width:200px;max-width:220px;">
-        <div style="background:#1a1a1a;color:#fff;padding:14px 20px;font-size:14px;font-weight:700;letter-spacing:0.12em;" id="sidebar-cat-title">VINOS</div>
-        <div id="sidebar-subcats" style="background:#f5f5f5;border:1px solid #e0e0e0;"></div>
-        <div style="background:#1a1a1a;color:#fff;padding:12px 20px;font-size:13px;font-weight:600;margin-top:16px;display:flex;justify-content:space-between;align-items:center;">
-          <span>Precio</span>
-          <button onclick="clearFilters()" style="background:none;border:none;color:#aaa;font-size:11px;cursor:pointer;">-</button>
+      <aside class="sidebar" id="sidebar" style="min-width:200px;max-width:220px;font-family:var(--font-body);">
+        <div style="background:#1a1a1a;color:#fff;padding:14px 20px;font-size:13px;font-weight:700;letter-spacing:0.12em;" id="sidebar-cat-title">VINOS</div>
+        <div id="sidebar-subcats" style="border:1px solid #e8e8e8;border-top:none;"></div>
+        <div style="background:#1a1a1a;color:#fff;padding:12px 20px;font-size:12px;font-weight:700;margin-top:0;display:flex;justify-content:space-between;align-items:center;letter-spacing:0.1em;">
+          <span>PRECIO</span>
+          <button onclick="clearFilters()" style="background:none;border:none;color:#aaa;font-size:14px;cursor:pointer;line-height:1;">−</button>
         </div>
-        <div style="padding:16px 20px;border:1px solid #e0e0e0;border-top:none;">
-          <input type="range" id="price-range" min="0" max="600" value="600" step="1" oninput="updatePriceFilter(this.value)" style="width:100%;"/>
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;margin-top:4px;">
-            <span>0€</span>
-            <span id="price-max-label">600€+</span>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;" id="price-checkboxes"></div>
+        <div style="padding:16px 20px;border:1px solid #e8e8e8;border-top:none;" id="price-boxes">
         </div>
       </aside>
 

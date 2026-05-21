@@ -55,29 +55,44 @@ function getCategoryLabel(cat) {
 }
 
 function buildSidebarCats(cat) {
-  const container = document.getElementById('sidebar-cats');
+  const SUBCATS = {
+    vinos:      ['BLANCOS','TINTO','ROSADO','ESPUMOSO','DULCES','ESTUCHES','INTERNACIONALES','MAGNUM','OLOROSOS'],
+    destilados: ['VERMOUTH','SIDRA','CREMAS Y LICORES','BRANDYS','GINEBRA','WHISKY','RON','ORUJO'],
+    gourmet:    ['IBÉRICOS','CONSERVAS','ACEITE','PATÉ','PIMENTÓN','CRACKERS','FRUTA'],
+    dulce:      ['CHOCOLATES','BOMBONES'],
+    cerveza:    ['RUBIA','ESPECIAL','ARTESANA','SIN ALCOHOL'],
+    infusiones: ['TÉ VERDE','TÉ NEGRO','ROOIBOS','MENTA','MANZANILLA'],
+  };
+  const titleEl = document.getElementById('sidebar-cat-title');
+  if (titleEl) titleEl.textContent = cat.toUpperCase();
+
+  const subs = SUBCATS[cat] || [...new Set(PRODUCTS.filter(p => p.categoria === cat).map(p => p.subcategoria))];
+  const container = document.getElementById('sidebar-subcats');
   if (!container) return;
 
-  const subs = [...new Set(PRODUCTS
-    .filter(p => p.categoria === cat || p.subcategoria === cat)
-    .map(p => p.subcategoria))];
+  container.innerHTML = subs.map(s => `
+    <div onclick="setSubcat('${s.toLowerCase()}')" 
+         style="padding:11px 20px;font-size:13px;letter-spacing:0.06em;border-bottom:1px solid #e8e8e8;cursor:pointer;color:#333;transition:background 0.15s;"
+         onmouseover="this.style.background='#f5f5f5';this.style.fontWeight='600';" 
+         onmouseout="this.style.background='';this.style.fontWeight='';">
+      ${s}
+    </div>`).join('');
 
-  if (subs.length <= 1) {
-    const group = container.closest('.sidebar__group');
-    if (group) group.style.display = 'none';
-    return;
+  // Price checkboxes
+  const priceBox = document.getElementById('price-boxes');
+  if (priceBox) {
+    const ranges = [[0,114],[114,227],[227,340],[340,454],[454,600]];
+    priceBox.innerHTML = ranges.map(([min,max]) => `
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#333;margin-bottom:8px;cursor:pointer;">
+        <input type="checkbox" onchange="togglePriceRange(${min},${max},this.checked)" 
+               style="accent-color:#000;width:14px;height:14px;"/>
+        ${min} - ${max} eur
+      </label>`).join('');
   }
+}
 
-  container.innerHTML = `
-    <label class="sidebar__option">
-      <input type="radio" name="subcat" value="" onchange="setSubcat('')" checked/>
-      Todos
-    </label>` +
-    subs.map(s => `
-    <label class="sidebar__option">
-      <input type="radio" name="subcat" value="${s}" onchange="setSubcat('${s}')"/>
-      ${getCategoryLabel(s)}
-    </label>`).join('');
+function togglePriceRange(min, max, checked) {
+  renderCategoryProducts();
 }
 
 function setSubcat(sub) {
