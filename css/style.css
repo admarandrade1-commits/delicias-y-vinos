@@ -242,3 +242,8 @@ input, select { font-family: inherit; }
 .header__nav { display: flex !important; position: static !important; height: auto !important; width: auto !important; background: transparent !important; padding: 0 !important; transform: none !important; overflow: visible !important; z-index: auto !important; flex: 1 !important; }
 .nav__list { display: flex !important; flex-direction: row !important; gap: 4px !important; }
 .hamburger { display: none !important; }
+
+/* ICONS VISIVEIS */
+.icon-btn { color: var(--white) !important; }
+.icon-btn svg { stroke: var(--white) !important; }
+.cart-count { background: var(--gold) !important; color: var(--black) !important; }
