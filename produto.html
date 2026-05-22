@@ -161,7 +161,7 @@
   <script src="js/produto.js"></script>
   <script>
   // Sincronizar menu com categorias do admin
-  (function() {
+  document.addEventListener('DOMContentLoaded', function() {
     const saved = localStorage.getItem('dyv_categories');
     if (!saved) return;
     try {
@@ -171,20 +171,17 @@
       if (!navList) return;
       // Remover itens simples (sem dropdown) do menu
       navList.querySelectorAll('.nav__item:not(.has-dropdown)').forEach(el => el.remove());
-      // Adicionar categorias do admin que não têm dropdown
+      // Adicionar todas as categorias sem dropdown
       const hasDrop = ['vinos','destilados','gourmet'];
       cats.forEach(cat => {
         if (hasDrop.includes(cat.slug)) return;
-        // Verificar se já existe
-        const exists = navList.querySelector(`a[href*="cat=${cat.slug}"]`);
-        if (exists) return;
         const li = document.createElement('li');
         li.className = 'nav__item';
         li.innerHTML = `<a href="categoria.html?cat=${cat.slug}" class="nav__link">${cat.nome}</a>`;
         navList.appendChild(li);
       });
-    } catch(e) {}
-  })();
+    } catch(e) { console.error('Menu sync error:', e); }
+  });
   </script>
 </body>
 </html>
