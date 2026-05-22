@@ -96,3 +96,42 @@ function toggleCart() {
 }
 
 document.addEventListener('DOMContentLoaded', updateCartUI);
+function finalizarEncomenda() {
+  if (cart.length === 0) {
+    alert('O teu carrinho está vazio!');
+    return;
+  }
+  const nome = prompt('O teu nome:');
+  if (!nome) return;
+  const email = prompt('O teu email:');
+  if (!email) return;
+  const morada = prompt('A tua morada:');
+  if (!morada) return;
+
+  const total = cart.reduce((sum, item) => {
+    const p = getProductById(item.id);
+    return sum + (p ? p.precio * item.qty : 0);
+  }, 0);
+
+  const encomenda = {
+    id: Date.now(),
+    data: new Date().toLocaleString('pt-PT'),
+    nome, email, morada,
+    produtos: cart.map(item => {
+      const p = getProductById(item.id);
+      return { nome: p ? p.nombre : item.id, qty: item.qty, preco: p ? p.precio : 0 };
+    }),
+    total: total.toFixed(2),
+    estado: 'Pendente'
+  };
+
+  const encomendas = JSON.parse(localStorage.getItem('dyv_orders') || '[]');
+  encomendas.push(encomenda);
+  localStorage.setItem('dyv_orders', JSON.stringify(encomendas));
+
+  cart = [];
+  saveCart();
+  updateCartUI();
+  toggleCart();
+  alert(`✅ Encomenda #${encomenda.id} confirmada!\nObrigado, ${nome}!`);
+}

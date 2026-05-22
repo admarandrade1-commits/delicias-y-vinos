@@ -66,7 +66,7 @@
   <button onclick="showSection('products')">📦 Produtos</button>
   <button onclick="showSection('categories')">🗂️ Categorias</button>
   <button onclick="showSection('users')">👤 Utilizadores</button>
-  <button onclick="showSection('orders')">📋 Encomendas</button>
+  <button onclick="showSection('orders'); loadOrders();">📋 Encomendas</button>
 </div>
 
 <div class="admin-body">
@@ -223,6 +223,27 @@
     sessionStorage.setItem('dyv_admin', 'ok');
   }
 })();
+
+// Carregar encomendas
+function loadOrders() {
+  const orders = JSON.parse(localStorage.getItem('dyv_orders') || '[]');
+  const tbody = document.getElementById('orders-tbody');
+  if (!tbody) return;
+  if (orders.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#999;padding:24px;">Sem encomendas ainda.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = orders.slice().reverse().map(o => `
+    <tr>
+      <td>#${o.id}</td>
+      <td>${o.data}</td>
+      <td>${o.nome}<br><small style="color:#999">${o.email}</small></td>
+      <td>${o.produtos.map(p => p.nome + ' x'+p.qty).join('<br>')}</td>
+      <td><strong>${o.total}€</strong></td>
+      <td><span class="badge" style="background:#fff8e1;color:#f57f17;">${o.estado}</span></td>
+    </tr>
+  `).join('');
+}
 
 // Produtos editáveis (começa com os do data.js)
 let editableProducts = JSON.parse(localStorage.getItem('dyv_products') || 'null') || [...PRODUCTS];
