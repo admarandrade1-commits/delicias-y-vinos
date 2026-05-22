@@ -3,272 +3,220 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Finalizar Compra — Delicias y Vinos</title>
+  <title>Finalizar Encomenda — Delicias y Vinos</title>
   <link rel="stylesheet" href="css/style.css?v=6"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
-    .checkout-page { max-width: 1000px; margin: 0 auto; padding: 40px 24px 80px; margin-top: var(--header-h); }
-    .checkout-page h1 { font-family: var(--font-display); font-size: 36px; font-weight: 400; margin-bottom: 32px; }
-    .checkout-grid { display: grid; grid-template-columns: 1fr 380px; gap: 40px; }
-    .checkout-form { background: var(--white); padding: 32px; border: 1px solid var(--border); }
-    .checkout-form h2 { font-family: var(--font-display); font-size: 22px; font-weight: 400; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-    .form-row.full { grid-template-columns: 1fr; }
-    .form-group { display: flex; flex-direction: column; gap: 6px; }
-    .form-group label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); }
-    .form-group input, .form-group select { padding: 12px 14px; border: 1px solid var(--border); font-family: var(--font-body); font-size: 14px; outline: none; transition: border 0.2s; }
+    .checkout-page { min-height: 100vh; background: var(--cream); padding-top: calc(var(--header-h) + 40px); padding-bottom: 60px; }
+    .checkout-grid { display: grid; grid-template-columns: 1fr 380px; gap: 32px; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .checkout-form-box, .checkout-summary { background: #fff; padding: 32px; border: 1px solid var(--border); }
+    .checkout-form-box h2, .checkout-summary h2 { font-family: var(--font-display); font-size: 24px; font-weight: 400; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #888; margin-bottom: 6px; }
+    .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid var(--border); font-family: var(--font-body); font-size: 14px; outline: none; transition: border 0.2s; background: #fff; }
     .form-group input:focus, .form-group select:focus { border-color: var(--gold); }
-    .payment-methods { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; }
-    .payment-option { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
-    .payment-option:hover { border-color: var(--gold); }
-    .payment-option input { accent-color: var(--gold); }
-    .payment-option span { font-size: 14px; }
-    .order-summary { background: var(--cream); padding: 28px; border: 1px solid var(--border); height: fit-content; position: sticky; top: calc(var(--header-h) + 24px); }
-    .order-summary h2 { font-family: var(--font-display); font-size: 20px; font-weight: 400; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-    .summary-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
-    .summary-item img { width: 48px; height: 48px; object-fit: contain; background: #fff; }
-    .summary-item-info { flex: 1; margin: 0 12px; }
-    .summary-item-name { font-size: 13px; line-height: 1.3; }
-    .summary-item-qty { font-size: 12px; color: var(--gray); }
-    .summary-total { display: flex; justify-content: space-between; font-size: 16px; font-weight: 600; margin-top: 16px; padding-top: 16px; border-top: 2px solid var(--black); }
-    .success-box { display: none; text-align: center; padding: 48px 32px; background: var(--white); border: 1px solid var(--border); }
-    .success-box .icon { font-size: 64px; margin-bottom: 16px; }
-    .success-box h2 { font-family: var(--font-display); font-size: 32px; font-weight: 400; margin-bottom: 12px; color: #2e7d32; }
-    .success-box p { color: var(--gray); font-size: 14px; margin-bottom: 24px; }
-    .success-box .order-id { font-size: 18px; font-weight: 600; color: var(--gold); margin: 12px 0; }
+    .summary-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+    .summary-item img { width: 50px; height: 50px; object-fit: cover; margin-right: 12px; }
+    .summary-item-info { flex: 1; }
+    .summary-total { display: flex; justify-content: space-between; padding: 16px 0; font-size: 16px; font-weight: 600; border-top: 2px solid #111; margin-top: 8px; }
+    .success-box { display: none; text-align: center; padding: 48px 24px; }
+    .success-box h2 { font-family: var(--font-display); font-size: 32px; color: #2e7d32; margin-bottom: 12px; }
+    .success-box p { color: #666; margin-bottom: 24px; }
     @media (max-width: 768px) { .checkout-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
-
   <header class="header" id="header">
     <div class="header__top">
-      <span>+34 982 550 543</span>
       <span>Envío gratuito desde 60€ · Entrega en 24/48h</span>
       <span><a href="mailto:pedidos@deliciasyvinos.com">pedidos@deliciasyvinos.com</a></span>
     </div>
     <div class="header__main">
       <a href="index.html" class="header__logo"><img src="https://www.deliciasyvinos.com/themes/deliciasyvinos/_img/logo.png" alt="Delicias y Vinos" style="height:60px;width:auto;"/></a>
-      <div style="flex:1;"></div>
-      <div class="header__actions">
-        <a href="login.html" class="icon-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        </a>
-        <a href="index.html" class="icon-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-          <span class="cart-count" id="cart-count">0</span>
-        </a>
-      </div>
     </div>
   </header>
 
   <main class="checkout-page">
-    <div class="breadcrumb" style="margin-top:0;margin-bottom:24px;">
-      <div style="display:flex;gap:8px;font-size:12px;color:var(--gray);">
-        <a href="index.html">Inicio</a><span>›</span><span>Finalizar Compra</span>
-      </div>
-    </div>
-
-    <h1>Finalizar Compra</h1>
-
-    <!-- SUCESSO -->
-    <div class="success-box" id="success-box">
-      <div class="icon">✅</div>
-      <h2>¡Encomenda Confirmada!</h2>
-      <div class="order-id" id="success-order-id"></div>
-      <p>Obrigado pela tua compra! Receberás uma confirmação em breve.</p>
-      <a href="index.html" class="btn btn--gold">← Voltar à Loja</a>
-    </div>
-
-    <!-- FORMULÁRIO -->
+    <!-- Formulário -->
     <div class="checkout-grid" id="checkout-grid">
-      <div>
-        <!-- DADOS PESSOAIS -->
-        <div class="checkout-form" style="margin-bottom:24px;">
-          <h2>Dados Pessoais</h2>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Nome</label>
-              <input type="text" id="fname" placeholder="O teu nome"/>
-            </div>
-            <div class="form-group">
-              <label>Apelido</label>
-              <input type="text" id="lname" placeholder="O teu apelido"/>
-            </div>
+      <div class="checkout-form-box">
+        <h2>Dados de Entrega</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nome</label>
+            <input type="text" id="co-nome" placeholder="O teu nome"/>
           </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Email</label>
-              <input type="email" id="email" placeholder="email@exemplo.com"/>
-            </div>
-            <div class="form-group">
-              <label>Teléfono</label>
-              <input type="tel" id="phone" placeholder="+34 600 000 000"/>
-            </div>
+          <div class="form-group">
+            <label>Apelido</label>
+            <input type="text" id="co-apelido" placeholder="O teu apelido"/>
           </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="co-email" placeholder="email@exemplo.com"/>
+        </div>
+        <div class="form-group">
+          <label>Telefone</label>
+          <input type="tel" id="co-telefone" placeholder="+34 600 000 000"/>
+        </div>
+        <div class="form-group">
+          <label>Morada</label>
+          <input type="text" id="co-morada" placeholder="Rua, número, andar"/>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Código Postal</label>
+            <input type="text" id="co-cp" placeholder="00000"/>
+          </div>
+          <div class="form-group">
+            <label>Cidade</label>
+            <input type="text" id="co-cidade" placeholder="Cidade"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>País</label>
+          <select id="co-pais">
+            <option value="España">España</option>
+            <option value="Portugal">Portugal</option>
+            <option value="França">França</option>
+            <option value="Outro">Outro</option>
+          </select>
         </div>
 
-        <!-- ENDEREÇO -->
-        <div class="checkout-form" style="margin-bottom:24px;">
-          <h2>Endereço de Entrega</h2>
-          <div class="form-row full">
-            <div class="form-group">
-              <label>Morada</label>
-              <input type="text" id="address" placeholder="Rua, número, andar"/>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Cidade</label>
-              <input type="text" id="city" placeholder="Cidade"/>
-            </div>
-            <div class="form-group">
-              <label>Código Postal</label>
-              <input type="text" id="zip" placeholder="00000"/>
-            </div>
-          </div>
-          <div class="form-row full">
-            <div class="form-group">
-              <label>País</label>
-              <select id="country">
-                <option value="es">España</option>
-                <option value="pt">Portugal</option>
-                <option value="fr">Francia</option>
-              </select>
-            </div>
-          </div>
+        <h2 style="margin-top:24px;">Método de Pagamento</h2>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+          <label style="display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--border);cursor:pointer;">
+            <input type="radio" name="pagamento" value="cartao" checked/> 💳 Cartão de Crédito/Débito
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--border);cursor:pointer;">
+            <input type="radio" name="pagamento" value="transferencia"/> 🏦 Transferência Bancária
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--border);cursor:pointer;">
+            <input type="radio" name="pagamento" value="entrega"/> 💵 Pagamento na Entrega
+          </label>
         </div>
 
-        <!-- PAGAMENTO -->
-        <div class="checkout-form">
-          <h2>Método de Pagamento</h2>
-          <div class="payment-methods">
-            <label class="payment-option">
-              <input type="radio" name="payment" value="card" checked/>
-              <span>💳 Cartão de Crédito/Débito</span>
-            </label>
-            <label class="payment-option">
-              <input type="radio" name="payment" value="transfer"/>
-              <span>🏦 Transferência Bancária</span>
-            </label>
-            <label class="payment-option">
-              <input type="radio" name="payment" value="paypal"/>
-              <span>🅿️ PayPal</span>
-            </label>
-            <label class="payment-option">
-              <input type="radio" name="payment" value="cash"/>
-              <span>💶 Pagamento na Entrega</span>
-            </label>
-          </div>
-          <div id="card-fields">
-            <div class="form-row full">
-              <div class="form-group">
-                <label>Número do Cartão</label>
-                <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCard(this)"/>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Validade</label>
-                <input type="text" placeholder="MM/AA" maxlength="5"/>
-              </div>
-              <div class="form-group">
-                <label>CVV</label>
-                <input type="text" placeholder="000" maxlength="3"/>
-              </div>
-            </div>
-          </div>
-          <button onclick="confirmOrder()" class="btn btn--gold btn--full" style="margin-top:24px;padding:16px;">
-            ✅ Confirmar Encomenda
-          </button>
-          <p style="font-size:12px;color:var(--gray);text-align:center;margin-top:12px;">🔒 Pagamento seguro e encriptado</p>
-        </div>
+        <div id="form-error" style="display:none;background:#fee;border:1px solid #fcc;color:#c33;padding:10px;margin-bottom:12px;font-size:13px;"></div>
+        <button onclick="confirmarEncomenda()" class="btn btn--gold btn--full" style="padding:16px;font-size:14px;letter-spacing:0.1em;">CONFIRMAR ENCOMENDA →</button>
       </div>
 
-      <!-- RESUMO -->
-      <div class="order-summary">
-        <h2>O teu Pedido</h2>
+      <!-- Resumo -->
+      <div class="checkout-summary">
+        <h2>Resumo</h2>
         <div id="summary-items"></div>
         <div class="summary-total">
           <span>Total</span>
           <span id="summary-total">0,00€</span>
         </div>
-        <div style="margin-top:16px;font-size:12px;color:var(--gray);display:flex;flex-direction:column;gap:8px;">
-          <span>🚚 Envío gratuito desde 60€</span>
-          <span>📦 Entrega em 24/48h</span>
-          <span>↩️ Devolução fácil em 30 dias</span>
-        </div>
+        <div style="font-size:12px;color:#999;margin-top:12px;">Envio gratuito a partir de 60€</div>
       </div>
+    </div>
+
+    <!-- Sucesso -->
+    <div class="success-box" id="success-box">
+      <div style="font-size:64px;margin-bottom:16px;">✅</div>
+      <h2>Encomenda Confirmada!</h2>
+      <p id="success-msg">A tua encomenda foi registada com sucesso.</p>
+      <a href="index.html" class="btn btn--gold" style="padding:14px 32px;">← Voltar à Loja</a>
     </div>
   </main>
 
   <script src="js/data.js"></script>
   <script src="js/cart.js"></script>
-  <script src="js/database.js"></script>
   <script>
-    function formatCard(input) {
-      let v = input.value.replace(/\D/g, '').substring(0, 16);
-      input.value = v.replace(/(.{4})/g, '$1 ').trim();
-    }
+    // Carregar resumo do carrinho
+    function loadSummary() {
+      const saved = localStorage.getItem('dyv_products');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) { PRODUCTS.length = 0; parsed.forEach(p => PRODUCTS.push(p)); }
+        } catch(e) {}
+      }
 
-    document.querySelectorAll('input[name="payment"]').forEach(radio => {
-      radio.addEventListener('change', () => {
-        document.getElementById('card-fields').style.display =
-          radio.value === 'card' ? 'block' : 'none';
-      });
-    });
-
-    function renderSummary() {
-      const items = cart;
-      let html = '';
+      const itemsEl = document.getElementById('summary-items');
+      const totalEl = document.getElementById('summary-total');
       let total = 0;
-      items.forEach(item => {
+      let html = '';
+
+      if (cart.length === 0) {
+        itemsEl.innerHTML = '<p style="color:#999;text-align:center;">Carrinho vazio</p>';
+        return;
+      }
+
+      cart.forEach(item => {
         const p = getProductById(item.id);
         if (!p) return;
         const sub = p.precio * item.qty;
         total += sub;
         html += `
           <div class="summary-item">
-            <img src="${p.imagen}" onerror="this.src='img/vino1.jpg'"/>
+            <img src="${p.imagen}" alt="${p.nombre}"/>
             <div class="summary-item-info">
-              <div class="summary-item-name">${p.nombre}</div>
-              <div class="summary-item-qty">x${item.qty}</div>
+              <div style="font-weight:500;">${p.nombre}</div>
+              <div style="color:#999;font-size:12px;">x${item.qty}</div>
             </div>
-            <span>${sub.toFixed(2).replace('.',',')}€</span>
+            <div style="font-weight:600;">${sub.toFixed(2).replace('.',',')}€</div>
           </div>`;
       });
-      document.getElementById('summary-items').innerHTML = html || '<p style="color:var(--gray);font-size:13px;">Carrinho vazio</p>';
-      document.getElementById('summary-total').textContent = total.toFixed(2).replace('.',',') + '€';
+
+      itemsEl.innerHTML = html;
+      totalEl.textContent = total.toFixed(2).replace('.',',') + '€';
     }
 
-    function confirmOrder() {
-      const fname = document.getElementById('fname').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const address = document.getElementById('address').value.trim();
-      const city = document.getElementById('city').value.trim();
+    function confirmarEncomenda() {
+      const nome = document.getElementById('co-nome').value.trim();
+      const apelido = document.getElementById('co-apelido').value.trim();
+      const email = document.getElementById('co-email').value.trim();
+      const telefone = document.getElementById('co-telefone').value.trim();
+      const morada = document.getElementById('co-morada').value.trim();
+      const cp = document.getElementById('co-cp').value.trim();
+      const cidade = document.getElementById('co-cidade').value.trim();
+      const pais = document.getElementById('co-pais').value;
+      const pagamento = document.querySelector('input[name="pagamento"]:checked').value;
+      const errorEl = document.getElementById('form-error');
 
-      if (!fname || !email || !address || !city) {
-        alert('Por favor preenche todos os campos obrigatórios!');
+      if (!nome || !email || !morada || !cidade) {
+        errorEl.style.display = 'block';
+        errorEl.textContent = 'Por favor preenche todos os campos obrigatórios.';
         return;
       }
 
-      if (cart.length === 0) {
-        alert('O teu carrinho está vazio!');
-        return;
-      }
+      const total = cart.reduce((sum, item) => {
+        const p = getProductById(item.id);
+        return sum + (p ? p.precio * item.qty : 0);
+      }, 0);
 
-      const order = DB.saveOrder(cart);
+      const encomenda = {
+        id: Date.now(),
+        data: new Date().toLocaleString('pt-PT'),
+        nome: nome + ' ' + apelido,
+        email, telefone,
+        morada: `${morada}, ${cp} ${cidade}, ${pais}`,
+        pagamento,
+        produtos: cart.map(item => {
+          const p = getProductById(item.id);
+          return { nome: p ? p.nombre : item.id, qty: item.qty, preco: p ? p.precio : 0 };
+        }),
+        total: total.toFixed(2),
+        estado: 'Pendente'
+      };
+
+      const encomendas = JSON.parse(localStorage.getItem('dyv_orders') || '[]');
+      encomendas.push(encomenda);
+      localStorage.setItem('dyv_orders', JSON.stringify(encomendas));
+
       cart = [];
-      localStorage.removeItem('dyv_cart');
-      updateCartUI();
+      saveCart();
 
       document.getElementById('checkout-grid').style.display = 'none';
       document.getElementById('success-box').style.display = 'block';
-      document.getElementById('success-order-id').textContent = '📋 Encomenda: ' + order.id;
+      document.getElementById('success-msg').textContent =
+        `Encomenda #${encomenda.id} registada! Receberás confirmação em ${email}.`;
     }
 
-    renderSummary();
-    updateCartUI();
+    document.addEventListener('DOMContentLoaded', loadSummary);
   </script>
 </body>
 </html>
