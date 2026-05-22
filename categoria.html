@@ -218,5 +218,32 @@
   <script src="js/cart.js"></script>
   <script src="js/main.js"></script>
   <script src="js/categoria.js"></script>
+  <script>
+  // Sincronizar menu com categorias do admin
+  (function() {
+    const saved = localStorage.getItem('dyv_categories');
+    if (!saved) return;
+    try {
+      const cats = JSON.parse(saved);
+      if (!Array.isArray(cats) || cats.length === 0) return;
+      const navList = document.querySelector('.nav__list');
+      if (!navList) return;
+      // Remover itens simples (sem dropdown) do menu
+      navList.querySelectorAll('.nav__item:not(.has-dropdown)').forEach(el => el.remove());
+      // Adicionar categorias do admin que não têm dropdown
+      const hasDrop = ['vinos','destilados','gourmet'];
+      cats.forEach(cat => {
+        if (hasDrop.includes(cat.slug)) return;
+        // Verificar se já existe
+        const exists = navList.querySelector(`a[href*="cat=${cat.slug}"]`);
+        if (exists) return;
+        const li = document.createElement('li');
+        li.className = 'nav__item';
+        li.innerHTML = `<a href="categoria.html?cat=${cat.slug}" class="nav__link">${cat.nome}</a>`;
+        navList.appendChild(li);
+      });
+    } catch(e) {}
+  })();
+  </script>
 </body>
 </html>
