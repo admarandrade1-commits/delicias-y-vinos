@@ -180,7 +180,21 @@
     </div>
   </footer>
 
-  <script src="js/data.js">function renderSidebar(cat) {
+  <script src="js/data.js"></script>
+  <script>
+  // Sobrescrever PRODUCTS com os do localStorage (admin) se existirem
+  const savedProducts = localStorage.getItem('dyv_products');
+  if (savedProducts) {
+    try {
+      const parsed = JSON.parse(savedProducts);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        PRODUCTS.length = 0;
+        parsed.forEach(p => PRODUCTS.push(p));
+      }
+    } catch(e) {}
+  }
+
+  function renderSidebar(cat) {
     const SUBCAT_LABELS = {
       vinos:      ['BLANCOS','TINTO','ROSADO','ESPUMOSO','DULCES','INTERNACIONALES','MAGNUM','OLOROSOS'],
       destilados: ['GINEBRA','WHISKY','RON','BRANDY','VERMOUTH','ORUJO','CREMAS Y LICORES','SIDRA'],
@@ -200,7 +214,7 @@
       ).join('');
     }
   }
-</script>
+  </script>
   <script src="js/cart.js"></script>
   <script src="js/main.js"></script>
   <script src="js/categoria.js"></script>
