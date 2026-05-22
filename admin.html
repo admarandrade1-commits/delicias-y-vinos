@@ -208,6 +208,22 @@
 <script src="js/data.js"></script>
 <script src="js/database.js"></script>
 <script>
+// Proteção de acesso ao admin
+(function() {
+  const adminUser = 'admin@deliciasyvinos.com';
+  const adminPass = 'admin123';
+  const session = sessionStorage.getItem('dyv_admin');
+  if (session !== 'ok') {
+    const user = prompt('Email de administrador:');
+    const pass = prompt('Password:');
+    if (user !== adminUser || pass !== adminPass) {
+      document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;"><div style="text-align:center;"><h2>Acesso negado</h2><p>Credenciais incorretas.</p><a href="index.html">← Voltar ao site</a></div></div>';
+      return;
+    }
+    sessionStorage.setItem('dyv_admin', 'ok');
+  }
+})();
+
 // Produtos editáveis (começa com os do data.js)
 let editableProducts = JSON.parse(localStorage.getItem('dyv_products') || 'null') || [...PRODUCTS];
 let editableCategories = JSON.parse(localStorage.getItem('dyv_categories') || 'null') || [
