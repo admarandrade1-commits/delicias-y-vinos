@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — Delicias y Vinos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Jost', sans-serif; background: #f5f5f5; color: #222; }
+    .admin-header { background: #1a1a1a; color: #fff; padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; }
+    .admin-header h1 { font-size: 18px; font-weight: 600; letter-spacing: 0.1em; }
+    .admin-header span { font-size: 13px; color: #aaa; }
+    .admin-nav { background: #2a2a2a; display: flex; gap: 0; }
+    .admin-nav button { padding: 14px 24px; background: none; border: none; color: #aaa; font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; letter-spacing: 0.08em; transition: 0.2s; border-bottom: 3px solid transparent; }
+    .admin-nav button:hover { color: #fff; }
+    .admin-nav button.active { color: #C9A84C; border-bottom-color: #C9A84C; }
+    .admin-body { max-width: 1200px; margin: 32px auto; padding: 0 24px; }
+    .section { display: none; }
+    .section.active { display: block; }
+    .card { background: #fff; border-radius: 4px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .card h2 { font-size: 16px; font-weight: 600; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #eee; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .stat-box { background: #fff; padding: 20px; border-radius: 4px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); text-align: center; }
+    .stat-box .num { font-size: 32px; font-weight: 600; color: #C9A84C; }
+    .stat-box .label { font-size: 12px; color: #888; margin-top: 4px; letter-spacing: 0.08em; text-transform: uppercase; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { background: #f5f5f5; padding: 10px 14px; text-align: left; font-weight: 600; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #666; }
+    td { padding: 12px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+    tr:hover td { background: #fafafa; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge-gold { background: #fff8e7; color: #b8860b; }
+    .badge-green { background: #e8f5e9; color: #2e7d32; }
+    .badge-red { background: #fce4e4; color: #c62828; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: none; border-radius: 3px; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; letter-spacing: 0.06em; transition: 0.2s; }
+    .btn-gold { background: #C9A84C; color: #000; }
+    .btn-gold:hover { background: #b8960a; }
+    .btn-red { background: #fee; color: #c62828; border: 1px solid #fcc; }
+    .btn-red:hover { background: #fcc; }
+    .btn-blue { background: #e8f0fe; color: #1a73e8; border: 1px solid #c5d8fa; }
+    .btn-blue:hover { background: #c5d8fa; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #666; }
+    .form-group input, .form-group select, .form-group textarea { padding: 10px 12px; border: 1px solid #ddd; border-radius: 3px; font-family: 'Jost', sans-serif; font-size: 13px; outline: none; transition: border 0.2s; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #C9A84C; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-actions { grid-column: 1 / -1; display: flex; gap: 12px; margin-top: 8px; }
+    .product-img-preview { width: 50px; height: 50px; object-fit: contain; background: #f5f5f5; }
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+    .modal.show { display: flex; }
+    .modal-box { background: #fff; padding: 32px; max-width: 700px; width: 90%; max-height: 90vh; overflow-y: auto; border-radius: 4px; }
+    .modal-box h3 { font-size: 16px; margin-bottom: 20px; }
+    .modal-close { float: right; background: none; border: none; font-size: 20px; cursor: pointer; color: #888; }
+  </style>
+</head>
+<body>
+
+<div class="admin-header">
+  <h1>🛒 Delicias y Vinos — Painel Admin</h1>
+  <span>Bem-vindo, Admin | <a href="index.html" style="color:#C9A84C;">← Voltar ao site</a></span>
+</div>
+
+<div class="admin-nav">
+  <button class="active" onclick="showSection('dashboard')">📊 Dashboard</button>
+  <button onclick="showSection('products')">📦 Produtos</button>
+  <button onclick="showSection('categories')">🗂️ Categorias</button>
+  <button onclick="showSection('users')">👤 Utilizadores</button>
+  <button onclick="showSection('orders')">📋 Encomendas</button>
+</div>
+
+<div class="admin-body">
+
+  <!-- DASHBOARD -->
+  <div id="section-dashboard" class="section active">
+    <div class="stats-grid" id="stats-grid"></div>
+    <div class="card">
+      <h2>Últimas Encomendas</h2>
+      <table>
+        <thead><tr><th>ID</th><th>Cliente</th><th>Total</th><th>Data</th><th>Estado</th></tr></thead>
+        <tbody id="recent-orders"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PRODUTOS -->
+  <div id="section-products" class="section">
+    <div class="card">
+      <h2>Gerir Produtos</h2>
+      <button class="btn btn-gold" onclick="openProductModal()" style="margin-bottom:16px;">+ Novo Produto</button>
+      <table>
+        <thead><tr><th>Img</th><th>Nome</th><th>Categoria</th><th>Preço</th><th>Badge</th><th>Ações</th></tr></thead>
+        <tbody id="products-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CATEGORIAS -->
+  <div id="section-categories" class="section">
+    <div class="card">
+      <h2>Gerir Categorias</h2>
+      <div style="display:flex;gap:12px;margin-bottom:20px;">
+        <input type="text" id="new-cat-name" placeholder="Nome da categoria" style="padding:10px;border:1px solid #ddd;border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;flex:1;"/>
+        <input type="text" id="new-cat-slug" placeholder="Slug (ex: vinos)" style="padding:10px;border:1px solid #ddd;border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;flex:1;"/>
+        <button class="btn btn-gold" onclick="addCategory()">+ Adicionar</button>
+      </div>
+      <table>
+        <thead><tr><th>Nome</th><th>Slug</th><th>Nº Produtos</th><th>Ações</th></tr></thead>
+        <tbody id="categories-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- UTILIZADORES -->
+  <div id="section-users" class="section">
+    <div class="card">
+      <h2>Utilizadores Registados</h2>
+      <table>
+        <thead><tr><th>Nome</th><th>Email</th><th>Data Registo</th><th>Encomendas</th></tr></thead>
+        <tbody id="users-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ENCOMENDAS -->
+  <div id="section-orders" class="section">
+    <div class="card">
+      <h2>Todas as Encomendas</h2>
+      <table>
+        <thead><tr><th>ID</th><th>Cliente</th><th>Produtos</th><th>Total</th><th>Data</th><th>Estado</th></tr></thead>
+        <tbody id="orders-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL PRODUTO -->
+<div class="modal" id="product-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeProductModal()">✕</button>
+    <h3 id="modal-title">Novo Produto</h3>
+    <div class="form-grid">
+      <input type="hidden" id="edit-id"/>
+      <div class="form-group">
+        <label>Nome</label>
+        <input type="text" id="edit-nombre" placeholder="Nome do produto"/>
+      </div>
+      <div class="form-group">
+        <label>Preço (€)</label>
+        <input type="number" id="edit-precio" step="0.01" placeholder="0.00"/>
+      </div>
+      <div class="form-group">
+        <label>Categoria</label>
+        <select id="edit-categoria">
+          <option value="vinos">Vinos</option>
+          <option value="destilados">Destilados</option>
+          <option value="gourmet">Gourmet</option>
+          <option value="dulce">Dulce</option>
+          <option value="cerveza">Cerveza</option>
+          <option value="infusiones">Infusiones</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Subcategoria</label>
+        <input type="text" id="edit-subcategoria" placeholder="ex: albarino"/>
+      </div>
+      <div class="form-group">
+        <label>Bodega</label>
+        <input type="text" id="edit-bodega" placeholder="Nome da bodega"/>
+      </div>
+      <div class="form-group">
+        <label>Badge</label>
+        <select id="edit-badge">
+          <option value="">Nenhum</option>
+          <option value="Destacado">Destacado</option>
+          <option value="Más Vendido">Más Vendido</option>
+          <option value="Premium">Premium</option>
+          <option value="Novedad">Novedad</option>
+          <option value="Exclusivo">Exclusivo</option>
+          <option value="Local">Local</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Graduação</label>
+        <input type="text" id="edit-graduacion" placeholder="ex: 13%"/>
+      </div>
+      <div class="form-group">
+        <label>Volume</label>
+        <input type="text" id="edit-volumen" placeholder="ex: 750 ml"/>
+      </div>
+      <div class="form-group full">
+        <label>URL da Imagem</label>
+        <input type="text" id="edit-imagen" placeholder="https://... ou img/..."/>
+      </div>
+      <div class="form-group full">
+        <label>Descrição</label>
+        <textarea id="edit-descripcion" rows="3" placeholder="Descrição do produto..."></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-gold" onclick="saveProduct()">💾 Guardar</button>
+        <button class="btn btn-red" onclick="closeProductModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/database.js"></script>
+<script>
+// Produtos editáveis (começa com os do data.js)
+let editableProducts = JSON.parse(localStorage.getItem('dyv_products') || 'null') || [...PRODUCTS];
+let editableCategories = JSON.parse(localStorage.getItem('dyv_categories') || 'null') || [
+  {nome:'Vinos', slug:'vinos'},
+  {nome:'Destilados', slug:'destilados'},
+  {nome:'Gourmet', slug:'gourmet'},
+  {nome:'Dulce', slug:'dulce'},
+  {nome:'Cerveza', slug:'cerveza'},
+  {nome:'Infusiones', slug:'infusiones'},
+];
+
+function saveProducts() {
+  localStorage.setItem('dyv_products', JSON.stringify(editableProducts));
+}
+function saveCategories() {
+  localStorage.setItem('dyv_categories', JSON.stringify(editableCategories));
+}
+
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.admin-nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  event.target.classList.add('active');
+  if (name === 'dashboard') renderDashboard();
+  if (name === 'products') renderProducts();
+  if (name === 'categories') renderCategories();
+  if (name === 'users') renderUsers();
+  if (name === 'orders') renderOrders();
+}
+
+function renderDashboard() {
+  const stats = DB.getStats();
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-box"><div class="num">${editableProducts.length}</div><div class="label">Produtos</div></div>
+    <div class="stat-box"><div class="num">${editableCategories.length}</div><div class="label">Categorias</div></div>
+    <div class="stat-box"><div class="num">${stats.total_users}</div><div class="label">Utilizadores</div></div>
+    <div class="stat-box"><div class="num">${stats.total_orders}</div><div class="label">Encomendas</div></div>
+  `;
+  const orders = DB.getOrders().slice(-5).reverse();
+  document.getElementById('recent-orders').innerHTML = orders.length ? orders.map(o => `
+    <tr><td><b>${o.id}</b></td><td>${o.user_nome}</td><td><b>${o.total}€</b></td><td>${o.data}</td>
+    <td><span class="badge badge-gold">${o.estado}</span></td></tr>`).join('') :
+    '<tr><td colspan="5" style="text-align:center;color:#aaa;padding:24px;">Nenhuma encomenda ainda.</td></tr>';
+}
+
+function renderProducts() {
+  document.getElementById('products-table').innerHTML = editableProducts.map(p => `
+    <tr>
+      <td><img src="${p.imagen}" class="product-img-preview" onerror="this.src='img/vino1.jpg'"/></td>
+      <td><b>${p.nombre}</b></td>
+      <td><span class="badge badge-gold">${p.categoria}</span></td>
+      <td><b>${p.precio}€</b></td>
+      <td>${p.badge ? `<span class="badge badge-green">${p.badge}</span>` : '—'}</td>
+      <td style="display:flex;gap:8px;">
+        <button class="btn btn-blue" onclick="editProduct(${p.id})">✏️ Editar</button>
+        <button class="btn btn-red" onclick="deleteProduct(${p.id})">🗑️ Apagar</button>
+      </td>
+    </tr>`).join('');
+}
+
+function renderCategories() {
+  document.getElementById('categories-table').innerHTML = editableCategories.map((c,i) => `
+    <tr>
+      <td><b>${c.nome}</b></td>
+      <td><code>${c.slug}</code></td>
+      <td>${editableProducts.filter(p => p.categoria === c.slug).length} produtos</td>
+      <td><button class="btn btn-red" onclick="deleteCategory(${i})">🗑️ Apagar</button></td>
+    </tr>`).join('');
+}
+
+function renderUsers() {
+  const users = DB.getUsers();
+  document.getElementById('users-table').innerHTML = users.length ? users.map(u => `
+    <tr>
+      <td><b>${u.nome}</b></td>
+      <td>${u.email}</td>
+      <td>${u.data_registo}</td>
+      <td>${(u.encomendas||[]).length} encomendas</td>
+    </tr>`).join('') :
+    '<tr><td colspan="4" style="text-align:center;color:#aaa;padding:24px;">Nenhum utilizador registado.</td></tr>';
+}
+
+function renderOrders() {
+  const orders = DB.getOrders().reverse();
+  document.getElementById('orders-table').innerHTML = orders.length ? orders.map(o => `
+    <tr>
+      <td><b>${o.id}</b></td>
+      <td>${o.user_nome}<br/><small style="color:#aaa">${o.user_email}</small></td>
+      <td>${o.items.map(i => `${i.nombre} x${i.qty}`).join('<br/>')}</td>
+      <td><b>${o.total}€</b></td>
+      <td>${o.data} ${o.hora}</td>
+      <td><span class="badge badge-gold">${o.estado}</span></td>
+    </tr>`).join('') :
+    '<tr><td colspan="6" style="text-align:center;color:#aaa;padding:24px;">Nenhuma encomenda ainda.</td></tr>';
+}
+
+function openProductModal(product = null) {
+  document.getElementById('modal-title').textContent = product ? 'Editar Produto' : 'Novo Produto';
+  document.getElementById('edit-id').value = product?.id || '';
+  document.getElementById('edit-nombre').value = product?.nombre || '';
+  document.getElementById('edit-precio').value = product?.precio || '';
+  document.getElementById('edit-categoria').value = product?.categoria || 'vinos';
+  document.getElementById('edit-subcategoria').value = product?.subcategoria || '';
+  document.getElementById('edit-bodega').value = product?.bodega || '';
+  document.getElementById('edit-badge').value = product?.badge || '';
+  document.getElementById('edit-graduacion').value = product?.graduacion || '';
+  document.getElementById('edit-volumen').value = product?.volumen || '';
+  document.getElementById('edit-imagen').value = product?.imagen || '';
+  document.getElementById('edit-descripcion').value = product?.descripcion || '';
+  document.getElementById('product-modal').classList.add('show');
+}
+
+function closeProductModal() {
+  document.getElementById('product-modal').classList.remove('show');
+}
+
+function saveProduct() {
+  const id = document.getElementById('edit-id').value;
+  const product = {
+    id: id ? parseInt(id) : Date.now(),
+    nombre: document.getElementById('edit-nombre').value,
+    precio: parseFloat(document.getElementById('edit-precio').value),
+    categoria: document.getElementById('edit-categoria').value,
+    subcategoria: document.getElementById('edit-subcategoria').value,
+    bodega: document.getElementById('edit-bodega').value,
+    badge: document.getElementById('edit-badge').value || null,
+    graduacion: document.getElementById('edit-graduacion').value || null,
+    volumen: document.getElementById('edit-volumen').value,
+    imagen: document.getElementById('edit-imagen').value,
+    descripcion: document.getElementById('edit-descripcion').value,
+  };
+
+  if (!product.nombre || !product.precio) {
+    alert('Nome e preço são obrigatórios!');
+    return;
+  }
+
+  if (id) {
+    const idx = editableProducts.findIndex(p => p.id === parseInt(id));
+    if (idx !== -1) editableProducts[idx] = product;
+  } else {
+    editableProducts.push(product);
+  }
+
+  saveProducts();
+  closeProductModal();
+  renderProducts();
+  alert('Produto guardado com sucesso!');
+}
+
+function editProduct(id) {
+  const p = editableProducts.find(p => p.id === id);
+  if (p) openProductModal(p);
+}
+
+function deleteProduct(id) {
+  if (!confirm('Tens a certeza que queres apagar este produto?')) return;
+  editableProducts = editableProducts.filter(p => p.id !== id);
+  saveProducts();
+  renderProducts();
+}
+
+function addCategory() {
+  const nome = document.getElementById('new-cat-name').value.trim();
+  const slug = document.getElementById('new-cat-slug').value.trim().toLowerCase();
+  if (!nome || !slug) { alert('Preenche o nome e o slug!'); return; }
+  editableCategories.push({nome, slug});
+  saveCategories();
+  document.getElementById('new-cat-name').value = '';
+  document.getElementById('new-cat-slug').value = '';
+  renderCategories();
+}
+
+function deleteCategory(idx) {
+  if (!confirm('Apagar esta categoria?')) return;
+  editableCategories.splice(idx, 1);
+  saveCategories();
+  renderCategories();
+}
+
+// Init
+renderDashboard();
+</script>
+</body>
+</html>
